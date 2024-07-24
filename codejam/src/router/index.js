@@ -37,7 +37,7 @@ const routes = [
     // },
   },
   {
-    path: "/update",
+    path: "/update/:id",
     name: "update",
     component: () => import("../views/UpdateReservaView.vue"),
     // meta: {

@@ -20,7 +20,7 @@
           <td>{{ reserva.hora }}</td>
           <td>{{ reserva.tiempo }}</td>
           <td>
-            <button class="btn btn-danger" @click="deleteReserva(id)">
+            <button class="btn btn-danger" @click="deleteReserva(reserva.id)">
               <i class="bi bi-trash"></i>
             </button>
             &nbsp;

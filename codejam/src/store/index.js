@@ -108,7 +108,7 @@ export default createStore({
           reservas = state.reservas;
           reservas.splice(indexReserva, 1);
 
-          commit("SET_RESERVAS", reserva);
+          commit("SET_RESERVAS", reservas);
           localStorage.setItem("reservas", JSON.stringify(state.reservas));
 
           return true;
