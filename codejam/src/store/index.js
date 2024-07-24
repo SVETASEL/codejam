@@ -76,60 +76,18 @@ export default createStore({
         throw new Error("Error al obtener la información de usuarios.");
       }
     },
-    async setReservas({ commit, state }) {
+
+    async setReservas({ commit }) {
       try {
-        let reservas = localStorage.getItem("reservas");
+        let data = await reservationServices.getReservas();
+        commit("SET_RESERVAS", data);
 
-        if (reservas) {
-          console.log("Existe reservas en localStorage");
-          reservas = JSON.parse(reservas);
-        } else {
-          console.log("No Existe reservas en localStorage");
-          if (state.reservas.length == 0) {
-            reservas = await reservationServices.getReservas();
-            localStorage.setItem("reservas", JSON.stringify(reservas));
-          }
-        }
-
-        commit("SET_RESERVAS", reservas);
+        return true;
       } catch (error) {
-        console.log(error);
-        localStorage.clear();
-        throw new Error("Error al obtener la información de la reserva.");
+        throw new Error(error.message);
       }
     },
 
-    // async setReserva({ commit }) {
-    //   try {
-    //     let data = await reservationServices();
-    //     commit("SET_RESERVAS", data);
-
-    //     return true;
-    //   } catch (error) {
-    //     throw new Error(error.message);
-    //   }
-    // },
-    // async setReserva({ commit, state }) {
-    //   try {
-    //     let reservas = localStorage.getItem("reservas");
-    //     if (reservas) {
-    //       console.log("Existe reserva en localStorage");
-    //       reservas = JSON.parse(reservas);
-    //     } else {
-    //       console.log("No Existe reserva en localStorage");
-    //       if (!state.reserva) {
-    //         reserva = await reservationServices.getReservas();
-    //         localStorage.setItem("reservas", JSON.stringify(reservas));
-    //       }
-    //     }
-    //     commit("SET_RESERVAS", reservas);
-    //     return true;
-    //   } catch (error) {
-    //     console.log(error);
-    //     localStorage.clear();
-    //     throw new Error("Error al obtener la información de la reserva.");
-    //   }
-    // },
     async addReserva({ commit, state }, reserva) {
       try {
         commit("ADD_RESERVA", reserva);

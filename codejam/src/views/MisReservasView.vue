@@ -1,12 +1,11 @@
 <template>
   <div class="crudProductTable">
     <h2 class="crudProductTable__title text-center">Mis reservas</h2>
-    <table class="table">
+    <table class="table" v-if="reservas">
       <thead>
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Tipo de Sala</th>
-          <th scope="col">Participantes</th>
           <th scope="col">Fecha</th>
           <th scope="col">Hora</th>
           <th scope="col">Duración</th>
@@ -17,12 +16,11 @@
         <tr v-for="reserva in reservas" :key="reserva.id">
           <th scope="row">{{ reserva.id }}</th>
           <td>{{ reserva.area }}</td>
-          <td>{{ reserva.noParticipants }}</td>
           <td>{{ reserva.fecha }}</td>
           <td>{{ reserva.hora }}</td>
           <td>{{ reserva.tiempo }}</td>
           <td>
-            <button class="btn btn-danger" @click="deleteReserva(reserva.id)">
+            <button class="btn btn-danger" @click="deleteReserva(id)">
               <i class="bi bi-trash"></i>
             </button>
             &nbsp;
@@ -35,6 +33,9 @@
         </tr>
       </tbody>
     </table>
+    <section v-else>
+      <h2 class="text-center">No se encuentran reservas </h2>
+    </section>
   </div>
 </template>
 
@@ -42,11 +43,12 @@
 import { mapActions, mapState } from 'vuex';
 export default {
   name: "MisReservasView",
-  props: {
-    reservas: [],
+  data() {
+    return {
+    }
   },
   methods: {
-    ...mapActions(["setReserva", "removeReserva"]),
+    ...mapActions(["setReservas", "removeReserva"]),
     async deleteReserva(id) {
       try {
                 await this.removeReserva(id);
@@ -57,12 +59,14 @@ export default {
     }
   },
   computed: {
-    ...mapState(["reservas"])
-  },
-  async mounted() {
-    await this.setReserva()
-    // this.reservas = this.$store.getters.getReservaByUser()
-  },
+  ...mapState(["reservas"])
+},
+  async created() {
+        await this.setReservas()
+        this.reservas = this.$store.getters.getReservaByUser()
+    console.log(this.reservas)
+    }
+  
 };
 </script>
 

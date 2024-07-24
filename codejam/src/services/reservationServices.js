@@ -2,6 +2,8 @@ const getReservas = async () => {
   try {
     let response = await fetch("/api/reservas.json");
     let reservas = await response.json();
+    console.log(reservas);
+
     return reservas;
   } catch (error) {
     console.log(error);
