@@ -5,19 +5,45 @@
     <main class="container">
         <div class="row justify-content-center">
             <div class="col-12 col-md-7 col-lg-5">
-                <form action="">
-                    <div class="d-flex align-items-center">
+                <form v-if="user">
+                    <div class="d-flex align-items-center my-2">
                         <label for="name" class="form-label w-25">Nombre: </label>
-                        <input type="text" name="name" id="name" class="form-control w-75 mt-1"  maxlength="50" disabled :placeholder=[[user.name]]>
+                        <input type="text" name="name" id="name" class="form-control w-75 "  disabled :placeholder=[[user.name]]>
                     </div>
-                    <div>
-                        <select class="form-select" aria-label="Categorías">
-  <option selected>Open this select menu</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
-</select>
+                    <div class="d-flex align-items-center my-2">
+                        <label for="area" class="form-label w-25">Área: </label>
+                        <select class="form-select w-75 " >
+                            <option selected disabled>¿Qué tipo de área quieres reservar?</option>
+                            <option value="videojuegos">Sala de videojuegos</option>
+                            <option value="ludoteca">Mesas de ludoteca</option>
+                            <option value="sillones">Sillones de descanso</option>
+                            <option value="cabina">Cabina telefónica</option>
+                        </select>
                     </div>
+                    <div class="d-flex align-items-center my-2">
+                        <label for="noParticipantes" class="form-label w-25">Participantes: </label>
+                        <input type="number" name="noParticipantes" id="noParticipantes" min="1" max="4" class="form-control w-75 " required>
+                    </div>      
+                    <div class="d-flex align-items-center my-2">
+                        <label for="nombresParticipantes" class="form-label w-25">Nombres de los participantes (opcional) </label>
+                        <textarea name="nombresParticipantes" id="nombresParticipantes" class="form-control w-75" rows="2"></textarea>
+                    </div>
+                    <div class="d-flex align-items-center my-2">
+                        <label for="fecha" class="form-label w-25">Fecha:</label>
+                        <input type="date" class="form-control w-75" id="fecha" required>
+                    </div>
+                    <div class="d-flex align-items-center my-2">
+                        <label for="hora" class="form-label w-25">Hora:</label>
+                        <input type="time" class="form-control w-75" id="hora" required>
+                    </div>
+                    <div class="d-flex align-items-center my-2">
+                        <label for="fecha" class="form-label w-25">Duración:</label>
+                        <input type="number" name="noParticipantes" id="noParticipantes" min="1" max="4" class="form-control w-75 " required>
+                    </div>
+                    <div class="py-3 d-flex justify-content-around">
+                    <input type="submit" class="btn btn-success" value="Realizar reserva"> &nbsp;
+                    <router-link class="btn btn-warning" to="/">Cancelar</router-link>
+                </div>
                 </form>
             </div>
         </div>

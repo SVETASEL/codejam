@@ -1,0 +1,25 @@
+{
+    "reservas": [
+        {
+            "id": 1,
+            "user_id": 2,
+            "area": "videojuegos",
+            "noParticipantes": 4,
+            "nombresParticipantes": "Carlos Godoy, Pedro Gonzalez, María Martínez, Anita Jeria",
+            "fecha": "2024-08-22",
+            "hora": "15:00",
+            "tiempo": 3
+        },
+        {
+            "id": 1,
+            "user_id": 2,
+            "area": "ludoteca",
+            "noParticipantes": 2,
+            "nombresParticipantes": "Carlos Godoy, Anita Jeria",
+            "fecha": "2024-08-12",
+            "hora": "11:00",
+            "tiempo": 1
+        }
+        
+    ]
+}
