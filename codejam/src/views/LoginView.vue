@@ -2,31 +2,34 @@
   <div class="login">
     <header class="login__header">
       <h1 class="login__title">Login</h1>
+      <h5>Ingresa con tu correo y contraseña</h5>
     </header>
 
-    <main class="login__main container">
+    <main class="login__main container mt-3">
       <div class="login__container-form row">
         <form class="login__form col-12 col-md-4" @submit.prevent="login">
           <div class="login__form-group">
-            <label class="login__label form-label" for="email">Email</label>
+            <label class="login__label form-label" for="email"
+              >Correo Electrónico</label
+            >
             <input
               class="login__input form-control"
               type="email"
               id="email"
-              placeholder="Enter your email"
+              placeholder="Ingresa tu correo"
               v-model="email"
             />
           </div>
 
           <div class="login__form-group">
             <label class="login__label form-label" for="password"
-              >Password</label
+              >Contraseña</label
             >
             <input
               class="login__input form-control"
               type="password"
               id="password"
-              placeholder="Enter your password"
+              placeholder="Digita tu contraseña"
               v-model="password"
             />
           </div>
