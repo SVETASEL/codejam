@@ -11,26 +11,26 @@
                     <li class="nav-item">
                         <router-link to="/" class="nav-link">Inicio</router-link>
                     </li>
-                    <li class="nav-item dropdown" >
+                    <li class="nav-item dropdown" v-if="user">
                         <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Reservas
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu" >
                             <li>
                                 <router-link class="dropdown-item" to="/reservas">Nueva Reserva</router-link>
                             </li>
                             <li>
-                                <router-link class="dropdown-item" to="/mis-reservas">Mis reservas</router-link>
+                                <router-link class="dropdown-item" to="/mis-reservas" >Mis reservas</router-link>
                             </li>
                         </ul>
                     </li>
                     
                     
                     <li class="nav-item" >
-                        <router-link to="/login" class="nav-link" >Inicia sesión</router-link>
+                        <router-link to="/login" class="nav-link" v-if="!user">Inicia sesión</router-link>
                     </li>
                     <li class="nav-item" >
-                        <a href="" class="nav-link">Cerrar sesión</a>
+                        <a href="" class="nav-link" v-if="user">Cerrar sesión</a>
                     </li>
                     
                 </ul>
@@ -39,15 +39,25 @@
     </nav></template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
+
 export default {
     name: 'NavBar',
     // props: {},
     data(){
         return {}
     },
-    // computed: {},
-    //methods: {},
-    // watch: {},
+    computed: {
+        ...mapState(["user"])
+    },
+    methods: {
+        ...mapActions(["clearUser"]),
+        logout(){
+            this.clearUser();
+            alert("Se ha cerrado la sesión.");
+            this.$router.push("/");
+        }
+    },    // watch: {},
     // components: {},
     // mixins: [],
     // filters: {},
