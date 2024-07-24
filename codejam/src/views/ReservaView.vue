@@ -41,8 +41,13 @@
               max="4"
               class="form-control w-75"
               required
+              v-model="noParticipantes"
+              @input="validateParticipants"
             />
           </div>
+          <span v-if="errorParticipantes" class="text-danger">{{
+            errorParticipantes
+          }}</span>
           <div class="d-flex align-items-center my-2">
             <label for="nombresParticipantes" class="form-label w-25"
               >Nombres de los participantes (opcional)
@@ -66,20 +71,33 @@
               @change="validateDate"
             />
           </div>
+
           <div class="d-flex align-items-center my-2">
             <label for="hora" class="form-label w-25">Hora:</label>
-            <input
-              type="time"
-              class="form-control w-75"
+            <select
               id="hora"
+              class="form-control w-75"
+              v-model="hora"
+              @change="validateReservation"
               required
-              min="08:00"
-              max="20:00"
-            />
+            >
+              <option disabled value="">Selecciona una hora</option>
+              <option v-for="time in availableTimes" :key="time" :value="time">
+                {{ time }}
+              </option>
+            </select>
           </div>
+          <span v-if="errorHora" class="text-danger">{{ errorHora }}</span>
+
           <div class="d-flex align-items-center my-2">
             <label for="duracion" class="form-label w-25">Duración:</label>
-            <select class="form-select w-75" id="duracion" required>
+            <select
+              class="form-select w-75"
+              id="duracion"
+              v-model="duracion"
+              required
+              @change="validateReservation"
+            >
               <option value="30">30 minutos</option>
               <option value="60">1 hora</option>
               <option value="90">1 hora 30 minutos</option>
@@ -90,6 +108,9 @@
               <option value="240">4 horas</option>
             </select>
           </div>
+          <span v-if="errorDuracion" class="text-danger">{{
+            errorDuracion
+          }}</span>
           <div class="py-3 d-flex justify-content-around">
             <input
               type="submit"
@@ -119,7 +140,18 @@ export default {
     return {
       minDate,
       maxDate,
+      noParticipantes: 1,
+      errorParticipantes: "",
+
+      errorHora: "",
+      errorDuracion: "",
+      duracion: "",
+      hora: "",
+      availableTimes: [],
     };
+  },
+  created() {
+    this.generateAvailableTimes();
   },
   computed: {
     ...mapState(["user"]),
@@ -128,10 +160,55 @@ export default {
     validateDate(event) {
       const date = new Date(event.target.value);
       const day = date.getDay();
-      if (day === 0 || day === 6) {
+      if (day === 5 || day === 6) {
         // 0: Domingo, 6: Sábado
         alert("No se pueden reservar para fines de semana.");
         event.target.value = ""; // Limpiar el campo
+      }
+    },
+    validateParticipants() {
+      const value = parseInt(this.noParticipantes, 10);
+      if (value < 1 || value > 4) {
+        this.errorParticipantes =
+          "Número de participantes debe estar entre 1 y 4.";
+        this.noParticipantes = Math.min(Math.max(value, 1), 4); // Corrige el valor si está fuera del rango
+      } else {
+        this.errorParticipantes = "";
+      }
+    },
+    generateAvailableTimes() {
+      const minHour = 8; // 8 AM
+      const maxHour = 19; // 8 PM
+      const interval = 30; // minutes
+      let times = [];
+
+      for (let hour = minHour; hour <= maxHour; hour++) {
+        for (let minute = 0; minute < 60; minute += interval) {
+          let formattedHour = hour.toString().padStart(2, "0");
+          let formattedMinute = minute.toString().padStart(2, "0");
+          times.push(`${formattedHour}:${formattedMinute}`);
+        }
+      }
+      this.availableTimes = times;
+    },
+    handleHoraChange(event) {
+      this.validateHora();
+    },
+
+    validateReservation() {
+      if (this.hora && this.duracion) {
+        const [hour, minute] = this.hora.split(":").map(Number);
+        const durationInMinutes = parseInt(this.duracion, 10);
+        const reservationEndTime = hour * 60 + minute + durationInMinutes;
+        const maxTime = 20 * 60; // 20:00 en minutos
+
+        if (reservationEndTime > maxTime) {
+          this.errorHora = "";
+          this.errorDuracion = `La duración seleccionada excede la hora máxima de reserva permitida (20:00).`;
+        } else {
+          this.errorHora = "";
+          this.errorDuracion = "";
+        }
       }
     },
   },
