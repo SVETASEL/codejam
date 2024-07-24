@@ -6,7 +6,7 @@
         <main class="container">
     <div class="row justify-content-center">
       <div class="col-12 col-md-7 col-lg-5">
-        <form v-if="user"  @submit.prevent="reviseReserva">
+        <form v-if="user"  >
           <div class="d-flex align-items-center my-2">
             <label for="name" class="form-label w-25">Nombre: </label>
             <input
