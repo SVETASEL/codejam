@@ -52,7 +52,6 @@ export default {
     },
   },
   mounted() {
-    // Aquí puedes cargar los datos desde una API o un archivo local
     this.salas = [
       {
         id: 1,
