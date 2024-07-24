@@ -12,11 +12,6 @@
       </p>
       <p class="card-text">Categoria: {{ sala.category }}</p>
       <div class="d-flex justify-content-evenly">
-        <!-- <router-link
-          :to="{ name: 'productsDetail', params: { id: sala.id } }"
-          class="btn btn-primary"
-          >Ver Detalle</router-link
-        > -->
         <!--  -->
       </div>
     </div>

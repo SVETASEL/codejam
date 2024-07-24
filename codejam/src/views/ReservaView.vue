@@ -5,10 +5,11 @@
   <main class="container">
     <div class="row justify-content-center">
       <div class="col-12 col-md-7 col-lg-5">
-        <form v-if="user">
+        <form v-if="user" @submit.prevent="submitForm">
           <div class="d-flex align-items-center my-2">
             <label for="name" class="form-label w-25">Nombre: </label>
             <input
+              v-model="nombre"
               type="text"
               name="name"
               id="name"
@@ -209,6 +210,28 @@ export default {
           this.errorHora = "";
           this.errorDuracion = "";
         }
+      }
+    },
+    ...mapActions(["addReserva"]),
+    async submitForm() {
+      const reserva = {
+        nombre: this.nombre,
+        area: this.area,
+        noParticipantes: this.noParticipantes,
+        hora: this.hora,
+        duracion: this.duracion,
+        // Otros campos si es necesario
+      };
+
+      try {
+        const result = await this.addReserva(reserva);
+        if (result) {
+          alert("Reserva creada con éxito.");
+          // Opcional: redirigir o resetear el formulario
+        }
+      } catch (error) {
+        console.error(error.message);
+        alert("Ocurrió un error al crear la reserva.");
       }
     },
   },
