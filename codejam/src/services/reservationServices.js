@@ -1,11 +1,27 @@
-const getReservations = async () => {
+const getReservas = async () => {
   try {
     let response = await fetch("/api/reservas.json");
-    let reservations = await response.json();
-    return reservations;
+    let reservas = await response.json();
+    return reservas;
   } catch (error) {
     console.log(error);
   }
 };
 
-export default getReservations;
+const getReserva = async (id) => {
+  try {
+    let response = await fetch("/api/reservas.json");
+    let data = await response.json();
+    let reservas = data.reservas;
+
+    let reservaFound = reservas.find((reserva) => reserva.id == id);
+    return productFound;
+  } catch (error) {
+    throw new Error("No se pudo obtener la data de la reserva.");
+  }
+};
+
+export default {
+  getReservas,
+  getReserva,
+};
