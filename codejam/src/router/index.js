@@ -36,6 +36,14 @@ const routes = [
     //   login: true,
     // },
   },
+  {
+    path: "/update",
+    name: "update",
+    component: () => import("../views/UpdateReservaView.vue"),
+    // meta: {
+    //   login: true,
+    // },
+  },
 ];
 
 const router = createRouter({
